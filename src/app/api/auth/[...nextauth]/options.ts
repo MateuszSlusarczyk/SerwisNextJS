@@ -1,6 +1,6 @@
 import { NextAuthOptions, Session } from 'next-auth'
 import { MongoClient, MongoClientOptions } from 'mongodb'
-import { createHash} from 'crypto'
+import bcrypt from 'bcrypt'
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI as string, {
@@ -15,7 +15,7 @@ export const options: NextAuthOptions = {
       type: 'credentials',
       credentials: {
         email: { label: "Email", type: "text", placeholder: "john@example.com" },
-        password: { label: "Password", type: "password" },
+        password: { label: "hasło", type: "password" },
       },
       async authorize(credentials = {}) {
         // Connect to the MongoDB database
@@ -31,11 +31,10 @@ export const options: NextAuthOptions = {
         }
 
         // Hash the provided password
-        const hashedPassword = hashStringToSHA256(credentials.password)
-        const TruePassword = (user.Password)
+        const hashedPassword = credentials.password;
+        const Password = (user.haslo)
         // Compare the hashed password with the hashed password from the database
-        const isPasswordValid = hashedPassword === TruePassword
-        console.log(hashedPassword, TruePassword);
+        const isPasswordValid = await bcrypt.compare(hashedPassword, Password)
         if (!isPasswordValid) {
           mongoClient.close()
           throw new Error('Password does not match')
@@ -66,10 +65,4 @@ export const options: NextAuthOptions = {
       return params.session
     },
   },
-}
-
-function hashStringToSHA256(input: string): string {
-  const hash = createHash('sha256')
-  hash.update(input)
-  return hash.digest('hex')
 }

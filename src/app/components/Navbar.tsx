@@ -4,12 +4,14 @@ export default function Navbar() {
     return (
         <nav className="bg-blue-800 p-4">
             <ul className="flex justify-evenly text-2xl font-bold">
-                <li><Link href="/">Home</Link></li>
-                <li><Link href="/api/auth/signin">Sign In</Link></li>
-                <li><Link href="/api/auth/signout">Sign Out</Link></li>
-                <li><Link href="/register">Sign Up</Link></li>
-                <li><Link href="/server">Server</Link></li>
-                <li><Link href="/client">Client</Link></li>
+                <li><Link href="/api/auth/signin">Zaloguj sie</Link></li>
+                <li><Link href="/api/auth/signout">Wyloguj sie</Link></li>
+                <li><Link href="/Pracownicy">Pracownicy</Link></li>
+                <li><Link href="/Klienci">Klienci</Link></li>
+                <li><Link href="/Projekty">Projekty</Link></li>
+                <li><Link href="/Zadania">Zadania</Link></li>
+                <li><Link href="/Faktury">Faktury</Link></li>
+                <li><Link href="/Firma">Firma</Link></li>
             </ul>
         </nav>
     )
