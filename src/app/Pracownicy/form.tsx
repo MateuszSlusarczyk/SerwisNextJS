@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from 'next/router';
 import { signIn } from "next-auth/react";
 import { ChangeEvent, useState } from "react";
 
@@ -21,7 +21,7 @@ export const RegisterForm = () => {
     setFormValues({  imię: "", nazwisko: "", email: "", nr_telefonu: "", data_końca_umowy: "", haslo: ""});
 
     try {
-      const res = await fetch("/api/PracownikAdd", {
+      const res = await fetch("/api/PracownicyAdd", {
         method: "POST",
         body: JSON.stringify(formValues),
         headers: {
@@ -34,8 +34,8 @@ export const RegisterForm = () => {
         setError((await res.json()).message);
         return;
       }
+      window.location.reload();
 
-      signIn(undefined, { callbackUrl: "/" });
     } catch (error: any) {
       setLoading(false);
       setError(error);
@@ -52,7 +52,7 @@ export const RegisterForm = () => {
     "w-full px-4 py-3 rounded-lg bg-black text-white border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 ring-blue-200 ring-opacity-50";
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="">
       {error && (
         <p className="text-center bg-red-300 py-4 mb-6 rounded">{error}</p>
       )}
@@ -125,11 +125,10 @@ export const RegisterForm = () => {
       </div>
       <button
         type="submit"
-        style={{ backgroundColor: `${loading ? "#ccc" : "#3446eb"}` }}
-        className="inline-block px-7 py-4 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+        className="w-full h-12 rounded-lg bg-tertiary font-bold "
         disabled={loading}
       >
-        {loading ? "Rejestracja w toku..." : "Zarejestruj się"}
+        {loading ? "Dodawanie w toku..." : "Dodaj pracownika"}
       </button>
     </form>
   );

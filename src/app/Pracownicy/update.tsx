@@ -33,13 +33,14 @@ export const PracownicyUpdate = () => {
       }
       // Handle success response
       setFormValues({  imię: "", nazwisko: "", email: "", nowy_email:"",nr_telefonu: "", data_końca_umowy: "", haslo: ""});
+      window.location.reload();
     } catch (error: any) {
       setLoading(false);
     }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = event.target;
+    const { name, value } = event.target;
 
       setFormValues((prevValues) => ({
         ...prevValues,
@@ -51,7 +52,7 @@ export const PracownicyUpdate = () => {
     'w-full px-4 py-3 rounded-lg bg-black text-white border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 ring-blue-200 ring-opacity-50';
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="">
       {error && <p className="text-center bg-red-300 py-4 mb-6 rounded">{error}</p>}
       <div className="mb-2">
         <input
@@ -133,8 +134,7 @@ export const PracownicyUpdate = () => {
       </div>
       <button
         type="submit"
-        style={{ backgroundColor: `${loading ? '#ccc' : '#3446eb'}` }}
-        className="inline-block px-7 py-4 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+        className="w-full h-12 rounded-lg bg-quaternary font-bold"
         disabled={loading}
       >
         {loading ? 'Zmienianie...' : 'Zmień informacje'}

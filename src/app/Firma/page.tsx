@@ -6,10 +6,9 @@ import Navbar from "../components/Navbar";
 export default function RegisterPage() {
   return (
     <>
-      <Navbar />
       <section>
         <div>
-          <div>
+          <div className="bg-red-500">
             <FirmaAdd />
             <FirmaUpdate />
             <FirmaDelete />
