@@ -11,6 +11,9 @@ module.exports = {
       'quaternary': '#FFCE62',
       'quinary': '#0BC56D',
       'senary': '#FAF1CB',
+      'septenary': '#E0E0E0',
+      'octonary': '#575757',
+      'nonary': '#FFFFFF',
       
     },
     extend: {

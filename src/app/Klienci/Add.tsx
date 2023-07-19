@@ -10,13 +10,14 @@ export const KlienciAdd = () => {
     nazwisko: "",
     email: "",
     nr_telefonu: "",
+    haslo: "",
   });
   const [error, setError] = useState("");
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setFormValues({  imię: "", nazwisko: "", email: "", nr_telefonu: ""});
+    setFormValues({  imię: "", nazwisko: "", email: "", nr_telefonu: "", haslo: ""});
 
     try {
       const res = await fetch("/api/KlienciAdd", {
@@ -93,6 +94,17 @@ export const KlienciAdd = () => {
           name="nr_telefonu"
           value={formValues.nr_telefonu}
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+          onChange={handleChange}
+          placeholder="Numer Telefonu"
+          className={`${inputStyle}`}
+        />
+      </div>
+      <div className="mb-3">
+        <input
+          required
+          type="password"
+          name="haslo"
+          value={formValues.haslo}
           onChange={handleChange}
           placeholder="Numer Telefonu"
           className={`${inputStyle}`}

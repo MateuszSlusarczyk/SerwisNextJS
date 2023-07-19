@@ -14,13 +14,8 @@ export default function Navbar() {
                     alt="Gwiazdka"
                     /><p className="font-extrabold text-lg mt-3"> <Link href="/">Tasker</Link></p></li>
                 <li className="mt-4 font-semibold hover:text-secondary"><Link href="/api/auth/signin">Zaloguj sie</Link></li>
-                <li className="mt-4 font-semibold hover:text-secondary"><Link href="/Pracownicy">Pracownicy</Link></li>
-                <li className="mt-4 font-semibold hover:text-secondary"><Link href="/Klienci">Klienci</Link></li>
-                <li className="mt-4 font-semibold hover:text-secondary"><Link href="/Projekty">Projekty</Link></li>
-                <li className="mt-4 font-semibold hover:text-secondary"><Link href="/Zadania">Zadania</Link></li>
-                <li className="mt-4 font-semibold hover:text-secondary"><Link href="/Faktury">Faktury</Link></li>
-                <li className="mt-4 font-semibold hover:text-secondary"><Link href="/Firma">Firma</Link></li>
                 <li className="mt-4 font-semibold hover:text-secondary"><Link href="/api/auth/signout">Wyloguj sie</Link></li>
+                <li className="mt-4 font-semibold hover:text-secondary"><Link href="../Main">Dashboard</Link></li>
             </ul>
             <hr className="mt-4"></hr>
         </nav>

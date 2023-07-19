@@ -8,13 +8,14 @@ const mongoClient = new MongoClient(process.env.MONGODB_URI as string, {
   
 export async function POST(req: Request) {
   try {
-    const { imię, nazwisko, email, nr_telefonu, data_końca_umowy, haslo } = (await req.json()) as {
+    const { imię, nazwisko, email, nr_telefonu, data_końca_umowy, haslo, rola } = (await req.json()) as {
       imię: string;
       nazwisko: string;
       email: string;
       nr_telefonu: string;
       data_końca_umowy: string;
       haslo: string;
+      rola:string;
     };
     const hashed_password = await bcrypt.hash(haslo,10);
 
@@ -29,7 +30,18 @@ export async function POST(req: Request) {
             mongoClient.close();
             throw new Error('User with this email already exists')
         }
-        //Hash password
+
+        switch(rola){
+          case 'Admin':
+            break;
+          case 'Pracownik':
+            break;
+          case 'Klient':
+            break;
+          default:
+            throw new Error('Nieprawidłowa rola, wybierz jedna z: Admin, Pracownik, Klient')
+        }
+
         const status = await collection.insertOne({
             imię, 
             nazwisko,
@@ -37,6 +49,7 @@ export async function POST(req: Request) {
             nr_telefonu,
             data_końca_umowy,
             haslo: hashed_password,
+            rola,
         });
         mongoClient.close();
     return NextResponse.json({

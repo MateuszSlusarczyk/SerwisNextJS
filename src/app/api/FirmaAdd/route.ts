@@ -7,7 +7,7 @@ const mongoClient = new MongoClient(process.env.MONGODB_URI as string, {
 
 export async function POST(req: NextRequest) {
   try {
-    const { Nazwa, Nip, Regon, Logo, Czlonkowie_zarz } = (await req.json()) as {
+    const { Nazwa, Nip, Regon, Logo, Czlonkowie_zarz, } = (await req.json()) as {
       Nazwa: string;
       Nip: string;
       Regon: string;

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-export const GetPracownicy = () => {
+export const KlienciGet = () => {
   const [employeeData, setEmployeeData] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/PracownicyData");
+        const res = await fetch("/api/KlienciData");
         if (!res.ok) {
-          throw new Error("Failed to fetch employee data");
+          throw new Error("Failed to fetch Klienci data");
         }
         const data = await res.json();
         setEmployeeData(data);
@@ -31,6 +31,9 @@ export const GetPracownicy = () => {
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Id Klienta
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Imię
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -42,14 +45,14 @@ export const GetPracownicy = () => {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Numer Telefonu
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Data końca umowy
-            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {employeeData.map((employee:any) => (
             <tr key={employee._id}>
+               <td className="px-6 py-4 whitespace-nowrap">
+                {employee.id_klienta}
+              </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {employee.imię}
               </td>
@@ -62,9 +65,7 @@ export const GetPracownicy = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {employee.nr_telefonu}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {employee.data_końca_umowy}
-              </td>
+              
             </tr>
           ))}
         </tbody>

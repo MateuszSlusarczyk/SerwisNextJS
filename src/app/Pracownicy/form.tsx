@@ -12,13 +12,14 @@ export const RegisterForm = () => {
     nr_telefonu: "",
     data_końca_umowy: "",
     haslo: "",
+    rola: "",
   });
   const [error, setError] = useState("");
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setFormValues({  imię: "", nazwisko: "", email: "", nr_telefonu: "", data_końca_umowy: "", haslo: ""});
+    setFormValues({  imię: "", nazwisko: "", email: "", nr_telefonu: "", data_końca_umowy: "", haslo: "", rola:""});
 
     try {
       const res = await fetch("/api/PracownicyAdd", {
@@ -109,6 +110,17 @@ export const RegisterForm = () => {
           value={formValues.data_końca_umowy}
           onChange={handleChange}
           placeholder="Data końca umowy"
+          className={`${inputStyle}`}
+        />
+      </div>
+      <div className="mb-2">
+        <input
+          required
+          type="text"
+          name="rola"
+          value={formValues.rola}
+          onChange={handleChange}
+          placeholder="Rola - Admin, Pracownik, Klient"
           className={`${inputStyle}`}
         />
       </div>
