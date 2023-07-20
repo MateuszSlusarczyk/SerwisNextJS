@@ -106,7 +106,7 @@ export const KlienciAdd = () => {
           name="haslo"
           value={formValues.haslo}
           onChange={handleChange}
-          placeholder="Numer Telefonu"
+          placeholder="Hasło"
           className={`${inputStyle}`}
         />
       </div>

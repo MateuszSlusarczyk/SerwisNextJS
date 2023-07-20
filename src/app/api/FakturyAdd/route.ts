@@ -7,10 +7,10 @@ const mongoClient = new MongoClient(process.env.MONGODB_URI as string, {
   
 export async function POST(req: Request) {
   try {
-    const { nazwa, id_projektu, wartość_netto } = (await req.json()) as {
+    const { nazwa, id_projektu, wartosc_netto } = (await req.json()) as {
       nazwa: string;
       id_projektu: string;
-      wartość_netto: string;
+      wartosc_netto: string;
     };
 
     await mongoClient.connect()
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
             id_projektu:id_projektu,
             nazwa,
             wartość_netto,
-            wartość_brutto: (parseFloat(wartość_netto) * 1.23).toString(),
+            wartość_brutto: (parseFloat(wartosc_netto) * 1.23).toString(),
             vat: '23%',
         });
         mongoClient.close();

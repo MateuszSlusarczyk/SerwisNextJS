@@ -44,28 +44,29 @@ export const options: NextAuthOptions = {
       },
     },
     {
-      id: 'credentials',
+      id: 'credentialsNip',
       name: 'Nip',
       type: 'credentials',
       credentials: {
         Nip: { label: "Nip", type: "number", placeholder: "Numer Nip" },
         password: { label: "hasło", type: "password" },
       },
-      async authorize(credentials = {}) {
+      async authorize(credentialsNip = {}) {
         // Connect to the MongoDB database
         await mongoClient.connect()
         const db = mongoClient.db('ProjektNext')
         const collection = db.collection('Klienci')
 
-        const user = await collection.findOne({ nip_firmy: credentials.Nip })
+        const user = await collection.findOne({ nip_firmy: credentialsNip.Nip })
         if (!user) {
           mongoClient.close()
           throw new Error('No user found with this Nip')
         }
 
         // Hash the provided password
-        const hashedPassword = credentials.password;
+        const hashedPassword = credentialsNip.password;
         const Password = (user.haslo)
+        console.log(Password, hashedPassword);
         // Compare the hashed password with the hashed password from the database
         const isPasswordValid = await bcrypt.compare(hashedPassword, Password)
         if (!isPasswordValid) {
@@ -74,7 +75,7 @@ export const options: NextAuthOptions = {
         }
 
         // Return the user object (customize as needed)
-        return { id: user._id.toString(), email: user.email, name: user.imię, nip: user.nip,  role: user.rola }
+        return { id: user._id.toString(), name: user.imię, nip: user.nip,  role: user.rola }
     }
   }
   ],

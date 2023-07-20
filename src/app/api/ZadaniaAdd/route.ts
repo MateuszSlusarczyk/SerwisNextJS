@@ -1,10 +1,16 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
-
+import nodemailer from 'nodemailer';
 const mongoClient = new MongoClient(process.env.MONGODB_URI as string, {
   useUnifiedTopology: true,
 } as MongoClientOptions);
-
+const emailTransporter = nodemailer.createTransport({
+  service: 'Yahoo',
+  auth: {
+    user: process.env.EMAIL_LOG,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 export async function POST(req: NextRequest) {
   try {
     const {Nazwa_zadania, id_projektu, OdpowiedzialnaOsoba, Grafika, Opis_zadania } = (await req.json()) as {
@@ -21,9 +27,10 @@ export async function POST(req: NextRequest) {
     const db = mongoClient.db('ProjektNext');
     const collection = db.collection('Zadania');
     const ProjektyCollection = db.collection('Projekty');
+    const UżytkownicyCollection = db.collection('Użytkownicy');
     const checkExistingProjekt = await ProjektyCollection.findOne({ id_projektu });
     const checkExisting = await collection.findOne({ Nazwa_zadania });
-
+    const Pracownik = await UżytkownicyCollection.findOne({imię: OdpowiedzialnaOsoba});
     // Send error response if duplicate user is found
     if (checkExisting) {
       throw new Error('Zadanie już istnieje');
@@ -40,7 +47,14 @@ export async function POST(req: NextRequest) {
       Opis_zadania,
       Grafika: GrafikaBuffer, 
     });
-    console.log("Zadanie dodane");
+    const mailOptions = {
+      from: process.env.EMAIL_LOG,
+      to: Pracownik?.email,
+      subject: 'Nowe zadanie',
+      text: 'Otrzymałeś nowe zadanie o nazwie: ' + Nazwa_zadania + ' w projekcie: ' + checkExistingProjekt.nazwa_projektu + '. Opis zadania: ' + Opis_zadania
+    };
+
+    await emailTransporter.sendMail(mailOptions);
     mongoClient.close();
 
     return new NextResponse(
